@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attendance and Recovery Form</title>
+</head>
+<body>
+  <h2>Attendance and Recovery Form</h2>
+  <form id="responseForm">
+    <label>Name: <input type="text" name="name" required></label><br><br>
+    <label>Month:
+      <select name="month" required>
+        <option value="">Select Month</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+    </label><br><br>
+
+    <div id="subjects"></div>
+    <button type="button" onclick="addSubject()">Add Subject</button><br><br>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <script>
+    function addSubject() {
+      const div = document.createElement('div');
+      div.className = 'entry';
+      div.innerHTML = `
+        <hr>
+        <label>Subject: <input type="text" name="subject[]" required></label><br>
+        <label>Type: 
+          <select name="type[]" required>
+            <option value="">Select</option>
+            <option value="Theory">Theory</option>
+            <option value="Practical">Practical</option>
+          </select>
+        </label><br>
+        <label>Credits: <input type="number" name="credits[]" required></label><br>
+        <label>Total Class Monthly: <input type="number" name="monthly_classes[]" required></label><br>
+        <label>Total Class Taken: <input type="number" name="taken_classes[]" required></label><br>
+        <label>Recovery Step: <input type="text" name="recovery[]"></label><br>
+        <label>Reason: <textarea name="reason[]" rows="2"></textarea></label><br><br>
+      `;
+      document.getElementById('subjects').appendChild(div);
+    }
+
+    function submitForm() {
+      const form = document.getElementById("responseForm");
+      const formData = new FormData(form);
+
+      fetch("https://script.google.com/macros/s/AKfycbw09w3moFwuIInj1LQng72bC9I3exNhQZxewrGbZDSdyWQJby0Mp9HVSJwk4_0Itxwg/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert("Response submitted successfully!");
+        form.reset();
+        document.getElementById("subjects").innerHTML = "";
+      })
+      .catch(err => alert("Submission failed: " + err.message));
+    }
+
+    // Add 3 initial subject blocks
+    window.onload = () => {
+      addSubject();
+      addSubject();
+      addSubject();
+    }
+  </script>
+</body>
+</html>
