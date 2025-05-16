@@ -1,15 +1,96 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Attendance and Recovery Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+    }
+    form {
+      background: white;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 18px;
+      border: 1.8px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 12px 25px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #subjects > div.entry {
+      background: #f9fafc;
+      border: 1px solid #ccc;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 7px;
+      box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+  </style>
 </head>
 <body>
   <h2>Attendance and Recovery Form</h2>
   <form id="responseForm">
-    <label>Name: <input type="text" name="name" required></label><br><br>
+    <label>Name: <input type="text" name="name" required></label><br>
+
     <label>Month:
       <select name="month" required>
         <option value="">Select Month</option>
@@ -26,10 +107,11 @@
         <option>November</option>
         <option>December</option>
       </select>
-    </label><br><br>
+    </label><br>
 
     <div id="subjects"></div>
-    <button type="button" onclick="addSubject()">Add Subject</button><br><br>
+
+    <button type="button" onclick="addSubject()">Add Subject</button><br>
 
     <button type="button" onclick="submitForm()">Submit</button>
   </form>
@@ -52,7 +134,7 @@
         <label>Total Class Monthly: <input type="number" name="monthly_classes[]" required></label><br>
         <label>Total Class Taken: <input type="number" name="taken_classes[]" required></label><br>
         <label>Recovery Step: <input type="text" name="recovery[]"></label><br>
-        <label>Reason: <textarea name="reason[]" rows="2"></textarea></label><br><br>
+        <label>Reason: <textarea name="reason[]" rows="2"></textarea></label><br>
       `;
       document.getElementById('subjects').appendChild(div);
     }
@@ -74,7 +156,7 @@
       .catch(err => alert("Submission failed: " + err.message));
     }
 
-    // Add 3 initial subject blocks
+    // Add 3 initial subject blocks on page load
     window.onload = () => {
       addSubject();
       addSubject();
